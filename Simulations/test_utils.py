@@ -4,10 +4,9 @@ from simulation_utils import *
 from lifelines import CoxTimeVaryingFitter
 
 from os import chdir
-path = '/Users/bwq666/Documents/BoxHed/BoXHED2.0/'; chdir(path)
+path = '/Users/bwq666/Documents/GitHub/nonparametric-cli-test/BoXHED2.0'; chdir(path)
 from boxhed import boxhed
 from model_selection import cv
-
 
 
 def estimate_Pi(X,Z,L2_pen=0.0001):
@@ -128,7 +127,6 @@ def compute_gamma_double(tau,X,Z,box_params, quantiles, n_splits=2,L2_pen=0.0001
     fitted_sigmas = []
 
     split_size = len(tau)//n_splits
-    Ones = np.ones_like(tau)
 
     for k in range(n_splits):
         I_k = np.zeros_like(tau).astype(int)
@@ -161,5 +159,5 @@ def BM_supnorm_cdf(x,T_max=None,N=1000):
 def cox_test(X,Z,tau):
     df = format_data_with_X(X,Z,tau)
     ctv = CoxTimeVaryingFitter(penalizer=0.1)
-    ctv.fit(df, id_col="subject", event_col="delta", start_col="t_start", stop_col="t_end", show_progress=False)
+    ctv.fit(df, id_col="subject", event_col="delta", start_col="t_start", stop_col="t_end", show_progress=False,robust=False)
     return ctv.summary['p'][1]
