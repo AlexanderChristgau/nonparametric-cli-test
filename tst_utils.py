@@ -1,14 +1,20 @@
 import numpy as np
 from scipy.linalg import solve
-from simulation_utils import *
+from sim_utils import *
 from lifelines import CoxTimeVaryingFitter
 
-from os import chdir
-path = '/Users/bwq666/Documents/GitHub/nonparametric-cli-test/BoXHED2.0'; chdir(path)
-
+import os
+import sys
+path = '/Users/bwq666/Documents/GitHub/nonparametric-cli-test/BoXHED2.0'
+sys.path.append(path)
+# import importlib.util
+# spec = importlib.util.spec_from_file_location('boxhed', '/Users/bwq666/Documents/GitHub/nonparametric-cli-test/BoXHED2.0/boxhed.py')
+# module = importlib.util.module_from_spec(spec)
+# sys.modules['boxhed'] = module
+# spec.loader.exec_module(module)
+print('hey', os.path)
+print('j', sys.path[0])
 from boxhed import boxhed
-from model_selection import cv
-
 
 def estimate_Pi(X,Z,L2_pen=0.0001):
     n_s,n_T = Z.shape
