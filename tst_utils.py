@@ -159,5 +159,5 @@ def BM_supnorm_cdf(x,T_max=None,N=1000):
 def cox_test(X,Z,tau):
     df = format_data_with_X(X,Z,tau)
     ctv = CoxTimeVaryingFitter(penalizer=0.1)
-    ctv.fit(df, id_col="subject", event_col="delta", start_col="t_start", stop_col="t_end", show_progress=False,robust=False)
+    ctv.fit(df, id_col="subject", event_col="delta", start_col="t_start", stop_col="t_end", show_progress=False,initial_point=np.random.uniform(size=2))
     return ctv.summary['p'][1]

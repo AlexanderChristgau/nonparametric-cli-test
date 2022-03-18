@@ -68,10 +68,10 @@ def simulate(n_reps = 100, n_sample=500, n_quant = 128,
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    filename = '/Users/bwq666/Documents/GitHub/nonparametric-cli-test/sim_data/main_simulation.pkl'
+    filename = './sim_data/main_simulation.pkl'
     parser.add_argument('--file_save_path',default=filename,type=str,
         help="specify the path to save simulation results.")
-    parser.add_argument("--sample_sizes", nargs="+", default=[100,500,1000,2000])
+    parser.add_argument("--sample_sizes", nargs="+", default=[100,500])
     parser.add_argument("--repetitions", type=int, default=2)
     parser.add_argument("--same_kernels", type=bool, default=True)
     parser.add_argument("--kernels", nargs="+", default=['constant','gaussian','sine'])

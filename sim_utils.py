@@ -78,7 +78,7 @@ class cox_sampler:
     def _sample_tau(self,Z,Y,baseline=lambda t: t**2,link=np.exp):
         n_sample, n_quant = Z.shape
         T = np.linspace(0,1,n_quant)
-        intensity = link(baseline(T)*np.exp(self.beta1*Z+Y))
+        intensity = baseline(T)*link(self.beta1*Z+Y)
 
         E = np.random.exponential(size = (n_sample,1))@np.ones((1,n_quant))
         equations = np.cumsum(intensity,axis=1)/n_quant - E        
@@ -86,10 +86,10 @@ class cox_sampler:
 
         return tau
 
-    def scale_and_set_baseline(self,baseline=lambda t: t**2,link=np.exp,print_scale=False):
+    def scale_and_set_baseline(self,baseline=lambda t: t**2,link=np.exp,print_scale=False,initial=1):
         Z,X,Y = self.sample_ZXY(1000)
 
-        scale_coeff = 1
+        scale_coeff = initial
         scaled_baseline = lambda t: scale_coeff * baseline(t)
         tau = self._sample_tau(Z,Y,scaled_baseline,link)
 
