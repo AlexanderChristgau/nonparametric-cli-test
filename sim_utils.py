@@ -16,7 +16,7 @@ class cox_sampler:
         self.sig_X = sig_X
         self.sig_Y = sig_Y
         self.sig_Z = sig_Z
-        self.dependency = dependency
+        self.dependency = np.array(dependency)
         self.beta1 = beta1
 
         # Create kernels
@@ -67,7 +67,7 @@ class cox_sampler:
         X = self.sample_historic(Z,self.surface_X,self.sig_X)
         Y = self.sample_historic(Z,self.surface_Y,self.sig_Y)
         
-        if self.dependency>0:
+        if (self.dependency>0).any():
             Y += self.dependency*X / np.sqrt(n_sample)
 
         return Z,X,Y
@@ -99,7 +99,7 @@ class cox_sampler:
             scale_coeff += 1
             tau = self._sample_tau(Z,Y,scaled_baseline,link)
         if print_scale:
-            print("Scaled baseline coefficient:", scale_coeff)        
+            print("Scaled baseline coefficient:", scale_coeff)
         self.baseline = scaled_baseline
 
     def sample_all(self,n_sample=1000):
